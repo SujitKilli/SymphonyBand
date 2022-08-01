@@ -1,6 +1,5 @@
 package com.symphony.symphonyapplication.data.utils;
 
-
 import java.io.Serializable;
 
 public class Inst_Pla implements Serializable {

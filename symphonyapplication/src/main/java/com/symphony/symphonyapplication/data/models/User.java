@@ -26,9 +26,9 @@ public class User {
     @NotNull
     private String pwd;
 
-    @Column(name = "Ph_No")
+    @Column(name = "Ph_No",unique=true)
     @NotNull
-    private String ph_no;
+    private String phno;
 
     @Column(name = "Role_id")
     @NotNull

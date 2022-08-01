@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface UserRoleMappingRepository extends JpaRepository<UserRoleMapping, String> {
-
+    UserRoleMapping findByphno(String ph_no);
 }

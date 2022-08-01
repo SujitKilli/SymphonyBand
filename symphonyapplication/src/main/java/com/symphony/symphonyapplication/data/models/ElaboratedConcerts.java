@@ -2,20 +2,21 @@ package com.symphony.symphonyapplication.data.models;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "concert")
-public class Concert {
+@Table(name = "elaboratedconcerts")
+public class ElaboratedConcerts {
+
     @Id
     @Column(name = "Concert_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int concert_id;
 
     @Column(name = "Concert_date")
@@ -56,6 +57,15 @@ public class Concert {
     @Column(name = "Comment")
     private String comment;
 
+    @Column(name = "Location_name")
+    private String location_name;
 
+    @Column(name = "Actual_Type")
+    private String actual_type;
+
+    @Column(name = "Timeline")
+    private String timeline;
+
+    public ElaboratedConcerts(){}
 
 }

@@ -1,17 +1,14 @@
 package com.symphony.symphonyapplication.controller;
 
 import com.symphony.symphonyapplication.data.models.User;
-import com.symphony.symphonyapplication.data.models.UserRoleMapping;
 import com.symphony.symphonyapplication.data.repository.UserRepository;
-import com.symphony.symphonyapplication.data.repository.UserRoleMappingRepository;
-import com.symphony.symphonyapplication.data.repository.UserRoleRepository;
 import com.symphony.symphonyapplication.exception.ResourceNotFoundExcpetion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 @CrossOrigin(origins = "*")

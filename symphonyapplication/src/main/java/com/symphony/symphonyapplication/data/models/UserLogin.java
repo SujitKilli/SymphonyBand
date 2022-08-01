@@ -15,13 +15,13 @@ public class UserLogin {
 
     @Id
     @Column(name = "Login_id")
-    private String login_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer login_id;
 
     @Column(name = "Login_time")
     @NotNull
     private Timestamp login_time;
 
     @Column(name = "Logout_time")
-    @NotNull
     private Timestamp logout_time;
 }

@@ -2,9 +2,11 @@ package com.symphony.symphonyapplication.data.models;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -20,7 +22,9 @@ public class UserRoleMapping implements Serializable {
 
     private String pwd;
 
-    private String ph_no;
+    @Column(name = "Ph_No",unique=true)
+    @NotNull
+    private String phno;
 
     private int role_id;
 
