@@ -64,16 +64,15 @@ public class LoginController {
     }
 
     @PostMapping("/pwdchange")
-    public ResponseEntity<User> createLogin(@RequestBody PwdChangeModel pcm) {
+    public ResponseEntity<User> changePassword(@RequestBody PwdChangeModel pcm) {
 
         if (pcm != null) {
             User curUser =userRepository.findByphno(pcm.phoneno);
-            if(pcm.question == curUser.getSecurity_question() && pcm.ans == curUser.getSecurity_ans()) {
+            if(pcm.question.equals(curUser.getSecurity_question()) && pcm.ans.equals(curUser.getSecurity_ans())) {
                 curUser.setPwd(pcm.pwd);
                 userRepository.save(curUser);
                 return new ResponseEntity<>(curUser, HttpStatus.OK);
             }
-            throw new ResourceNotFoundExcpetion("No employee found with passed username/password");
         }
 
         throw new ResourceNotFoundExcpetion("No employee found with passed username/password");
