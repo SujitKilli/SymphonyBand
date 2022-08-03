@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="Customer.js"></script>
+  <title>ABC Symphonic Band || My Concerts</title>
+  <link rel="stylesheet" type="text/css" href="project.css">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css">
+  <script src="https://kit.fontawesome.com/f5476aa894.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="navigation_bar">
+    <ul>
+      <li><a href="Welcome.html"><img src="ABC Symphonic Band-logos.jpeg" width="100px" height="30px"></a></li>
+      <li><a href="Welcome.html"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="#"><i class="fa-solid fa-compact-disc"></i> Concert</a>
+        <div class="Concert">
+          <ul>
+            <li><a href="ChurchConcert.html">Church Concerts</a></li>
+            <li><a href="PrivateConcert.html">Private parties</a></li>
+            <li><a href="OutdoorConcert.html">Outdoor concerts</a></li>
+          </ul>
+
+        </div>
+      </li>
+      <li><a href="#"><i class="fa-solid fa-music"></i> Music</a>
+        <div class="music">
+          <ul>
+            <li><a href="ClassicalMusic.html">Classical</a></li>
+            <li><a href="SwedishFolk.html">Swedish folk</a></li>
+            <li><a href="GermanFolk.html">German folk</a></li>
+          </ul>
+
+        </div>
+
+      </li>
+      <li><a href="AboutUs.html"><i class="fa-solid fa-address-card"></i> AboutUs</a></li>
+      <li><a href="Welcome.html"><i class="fa-solid fa-user"></i> Sign out</a></li>
+    </ul>
+
+  </div>
+  <h2 align="center" style="background: linear-gradient(175deg, #85C1E9, #F5B041);">Customer</h2>
+  <br>
+  <h2 align="center" style="background: linear-gradient(175deg, #85C1E9, #F5B041);">Upcoming Concerts</h2>
+
+
+	<br>
+	<table class="tableuser" id="upcoming-concert">
+		<thead>
+			<tr align="center">
+				<td>Concert</td>
+				<td>Concert Type</td>
+				<td>Concert Status</td>
+				<td>Date</td>
+				<td>Time</td>
+				<td>Location</td>
+
+			</tr>
+		</thead>
+		<tbody id="upcoming-concert-body">
+
+		</tbody>
+	</table>
+	<br>
+	<br>
+	<br>
+	<h2 align="center" style="background: linear-gradient(175deg, #85C1E9, #F5B041);">Old Concerts</h3>
+		<br>
+		<table class="tableuser" id="past-concert">
+			<thead>
+				<tr align="center">
+					<td>Concert</td>
+					<td>Concert Type</td>
+					<td>Concert Status</td>
+					<td>Date</td>
+					<td>Time</td>
+					<td>Location</td>
+
+				</tr>
+			</thead>
+			<tbody id="past-concert-body">
+
+			</tbody>
+		</table>
+		<br>
+		<br>
+		<br>
+
+
+  <h3 align="center" style="background: linear-gradient(175deg, #85C1E9, #F5B041);">Request for new Concerts</h3>
+  <div class="signup">
+    <div class="container">
+      <div class="title">Request</div>
+      <div class="content">
+        <form id="request_concert">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Concert Amount</span>
+              <input type="text" id="amount" name="amount" placeholder="Enter Concert Amount" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Date</span>
+              <input type="date" id="concert_date" name="concert_date" placeholder="Required Date" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Time</span>
+              <input type="Time" id="concert_time" name="concert_time"  placeholder="Enter time slot" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Location</span>
+              <select class="input-box" id="loc_id" name="loc_id" required>
+                <option value="">-- choose one --
+                <option value="1">Dallas
+                <option value="2">Austin
+                <option value="3">Houston
+                <option value="4">San Antonio
+                <option value="5">College Station
+              </select>
+            </div>
+            <div class="input-box">
+              <span class="details">Concert Type</span>
+              <select class="input-box" id="concert_type" name="concert_type" required>
+                <option value="">-- choose one --
+                <option value="1">Church Concert
+                <option value="3">Outdoor Concert
+                <option value="2">Private Party
+              </select>
+            </div>
+
+          </div>
+          <div class="button">
+            <input type="submit" value="Register">
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+  </div>
+  <table id="user"></table>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="Register.js"></script>
+    <title>ABC Symphonic Band</title>
+    <link rel="stylesheet" type="text/css" href="project.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css">
+    <script src="https://kit.fontawesome.com/f5476aa894.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="navigation_bar">
+    <ul>
+        <li><a href="Welcome.html"><img src="ABC Symphonic Band-logos.jpeg" width="100px" height="30px"></a></li>
+        <li><a href="Welcome.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="#"><i class="fa-solid fa-compact-disc"></i> Concert</a>
+            <div class="Concert">
+                <ul>
+                    <li><a href="ChurchConcert.html">Church Concerts</a></li>
+                    <li><a href="PrivateConcert.html">Private parties</a></li>
+                    <li><a href="OutdoorConcert.html">Outdoor concerts</a></li>
+                </ul>
+
+            </div>
+        </li>
+        <li><a href="#"><i class="fa-solid fa-music"></i> Music</a>
+            <div class="music">
+                <ul>
+                    <li><a href="ClassicalMusic.html">Classical</a></li>
+                    <li><a href="SwedishFolk.html">Swedish folk</a></li>
+                    <li><a href="GermanFolk.html">German folk</a></li>
+                </ul>
+
+            </div>
+
+        </li>
+        <li><a href="AboutUs.html"><i class="fa-solid fa-address-card"></i> AboutUs</a></li>
+        <li><a href="Signup.html"><i class="fa-solid fa-user-plus"></i> Sign Up</a></li>
+        <li><a href="LoginPage.html"><i class="fa-solid fa-user-check"></i> Sign in</a></li>
+        <li><a href="guest.html"><i class="fa-solid fa-user"></i> Guest</a></li>
+    </ul>
+
+</div>
+<div class="signup">
+    <div class="container">
+        <div class="title">Registration</div>
+        <div class="content">
+            <form class="form" id="register">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">First Name</span>
+                        <input type="text" id="fname" name="fname"   placeholder="Enter your first name" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Last name</span>
+                        <input type="text" id="lname" name="lname"   placeholder="Enter your last name" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details" >Password</span>
+                        <input type="password" id="pwd" name="pwd"   placeholder="Enter your password" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Phone Number</span>
+                        <input type="tel" id="phno" name="phno"   placeholder="Enter your number" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Security Question</span>
+                        <select class="input-box" id="security_question" name="security_question"   name="Security" id="Security" required>
+                            <option value="">-- choose one --
+                            <option value="What do you like?">What do you like?
+                            <option value="Where is your hometown?">Where is your hometown?
+                            <option value="What is your pet name?">What is your pet name?
+                            <option value="What is your best friend name?">What is your best friend name?
+                            <option value="Are you Single?">Are you Single?
+                            <option value="What is your Child Name?">What is your Child Name?
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Answer</span>
+                        <input type="text" id="security_ans" name="security_ans"  placeholder="Enter Your Answer" required>
+                    </div>
+                </div>
+
+                <div class="button" id="submit_register">
+                    <input type="submit"  value="Register">
+                </div>
+
+
+            </form>
+        </div>
+
+
+    </div>
+</div>
+</div>
+</body>
+</html>

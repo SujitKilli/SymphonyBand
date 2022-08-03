@@ -1,0 +1,299 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+html{
+	scroll-behavior: smooth;
+}
+thead{
+  font-weight: bold;
+  font-size: 20px;
+}
+body{
+	background: center center fixed;
+	background-image: url(music.jpeg);
+	background-position:center ;
+	background-size: cover;
+	background-repeat: no-repeat ;
+	height: 100%;
+	
+	font-family: Helvetica;
+}
+.navigation_bar{
+	background-image: linear-gradient(-200deg, #DAF7A6 10%, #F0F3F4 90%);
+	text-align: center;
+}
+.navigation_bar ul{
+	display: inline-flex;
+	list-style: none;
+	color: indianred;
+
+}
+.navigation_bar ul li{
+	padding: 15px ;
+	width:120px ;
+	margin:15px ;
+}
+
+.navigation_bar ul li a{
+	text-decoration: none;
+	color: black;
+}
+.active, .navigation_bar ul li:hover {
+	background: skyblue ;
+	border-radius: 5px;
+}
+.Concert{
+	display: none;
+}
+.navigation_bar ul li:hover .Concert{
+	display: block;
+	position: absolute;
+	background-image: linear-gradient(-200deg, #DAF7A6 10%, #F0F3F4 90%);
+	margin-top: 20px;
+	margin-left:5px ;
+}
+.navigation_bar ul li:hover .Concert ul{
+	display: block;
+	margin: 10px;
+}
+.music{
+	display: none;
+}
+.navigation_bar ul li:hover .music{
+	display: block;
+	position: absolute;
+	background-image: linear-gradient(-200deg, #DAF7A6 10%, #F0F3F4 90%);
+	margin-top: 20px;
+	margin-left:5px ;
+}
+.navigation_bar ul li:hover .music ul{
+	display: block;
+	margin: 10px;
+}
+
+.signup{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  
+}
+.container{
+  max-width: 700px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+.container .title{
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+}
+.container .title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+.content form .user-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+form .user-details .input-box{
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+}
+form .input-box span.details{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.user-details .input-box input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+  border-color: #9b59b6;
+}
+
+ form .category{
+   display: flex;
+   width: 80%;
+   margin: 14px 0 ;
+   justify-content: space-between;
+ }
+ form .category label{
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+ }
+
+ form .button{
+   height: 45px;
+   margin: 35px 0
+ }
+ form .button input{
+   height: 100%;
+   width: 100%;
+   border-radius: 5px;
+   border: none;
+   color: #fff;
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+ }
+ form .button input:hover{
+  /* transform: scale(0.99); */
+  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  }
+ @media(max-width: 584px){
+ .container{
+  max-width: 100%;
+}
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  form .category{
+    width: 100%;
+  }
+  .content form .user-details{
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .user-details::-webkit-scrollbar{
+    width: 5px;
+  }
+  }
+  @media(max-width: 459px){
+  .container .content .category{
+    flex-direction: column;
+  }
+}
+.AboutUs{
+	
+	display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 90vh;
+    width: 85vw;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    align-content: center;
+    min-height: 100vh;
+}
+.pagecontent{
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.pagecontent h2{
+    text-transform: uppercase;
+    font-size: 36px;
+    letter-spacing: 6px;
+    opacity: 0.9;
+}
+.pagecontent span{
+    height: 0.5px;
+    width: 80px;
+    background: #777;
+    margin: 30px 0;
+}
+.pagecontent p{
+    padding-bottom: 15px;
+    font-weight: 300;
+    opacity: 0.7;
+    width: 60%;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+.pageimage{
+    background: url("ABC Symphonic Band-logos.jpeg") center/cover no-repeat;
+}
+.redirect{
+    margin: 15px 0;
+}
+.redirect li{
+    border: 0.5px solid #777;
+    list-style: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    width: 160px;
+    text-align: center;
+}
+.redirect li a{
+    text-transform: uppercase;
+    color: #777;
+    text-decoration: none;
+}
+.redirect li:hover{
+    border-color: #06d6a0;
+}
+.redirect li:hover a{
+    color :#06d6a0;
+}
+.Classicalimage{
+    background: url("https://upload.wikimedia.org/wikipedia/commons/5/5b/BJO_Konzert_Phil_MR_098.jpg") center/cover no-repeat;
+}
+.GermanFolkImage{
+    background: url("https://www.bergvagabunden.com/wp-content/uploads/2019/10/german-folk-band.jpg") center/cover no-repeat;
+}
+.OutdoorConcertImage{
+    background: url("https://cottagelife.com/wp-content/uploads/2022/05/shutterstock_611781449.jpg") center/cover no-repeat;
+}
+.SwedishFolkImage{
+    background: url("https://swedishpress.com/wp-content/uploads/2021/01/21091499_xl-copy.jpg") center/cover no-repeat;
+}
+.ChurchConcertImage{
+    background: url("https://cdn.pixabay.com/photo/2016/03/04/11/12/church-1235849_1280.jpg") center/cover no-repeat;
+}
+.PrivateConcertImage{
+    background: url("https://www.atlanticrecords.com/sites/g/files/g2000003466/f/styles/photo_detail_large/public/201601/Screen%20Shot%202015-11-06%20at%2011.02.03%20AM.png?itok=hXA4-7oD") center/cover no-repeat;
+}
+.tableuser{
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #fff;
+  	padding: 25px 30px;
+  	border-radius: 5px;
+  	box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  	background: linear-gradient(175deg, #85C1E9, #F5B041)
+}
+td, th {
+  	width: 4rem;
+ 	height: 2rem;
+  	border: 1px solid #ccc;
+  	text-align: center;
+  	background: #fff;
+    justify-content: center;
+    align-items: center;
+}
+th {
+  	background: lightblue;
+  	border-color: white;
+}
