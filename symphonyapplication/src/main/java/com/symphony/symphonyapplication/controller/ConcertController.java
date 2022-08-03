@@ -45,12 +45,25 @@ public class ConcertController {
     }
 
     @PostMapping("/approveConcert")
-    public ResponseEntity<Concert> approveConcert(@RequestBody ApproveConcertModel approveConcertModel) {
+    public ResponseEntity<Concert> approveConcert(@RequestBody ConcertStatusChangeModel concertStatusChangeModel) {
 
-        Concert curConcert = concertRepository.findById(Integer.parseInt(approveConcertModel.concertID)).orElseThrow(() -> new ResourceNotFoundExcpetion("Concert not found"));
+        Concert curConcert = concertRepository.findById(Integer.parseInt(concertStatusChangeModel.concertID)).orElseThrow(() -> new ResourceNotFoundExcpetion("Concert not found"));
         if (curConcert != null) {
             curConcert.setConcert_status("InProgress");
-            curConcert.setManagerid(approveConcertModel.managerID);
+            curConcert.setManagerid(concertStatusChangeModel.managerID);
+            concertRepository.save(curConcert);
+            return new ResponseEntity<>(curConcert, HttpStatus.OK);
+        }
+
+        throw new ResourceNotFoundExcpetion("No employee found with passed username/password");
+    }
+
+    @PostMapping("/rejectConcert")
+    public ResponseEntity<Concert> rejectConcert(@RequestBody ConcertStatusChangeModel concertStatusChangeModel) {
+
+        Concert curConcert = concertRepository.findById(Integer.parseInt(concertStatusChangeModel.concertID)).orElseThrow(() -> new ResourceNotFoundExcpetion("Concert not found"));
+        if (curConcert != null) {
+            curConcert.setConcert_status("Cancelled");
             concertRepository.save(curConcert);
             return new ResponseEntity<>(curConcert, HttpStatus.OK);
         }
@@ -58,14 +71,15 @@ public class ConcertController {
         throw new ResourceNotFoundExcpetion("No employee found with passed username/password");
 
     }
+
 }
 
-class ApproveConcertModel{
+class ConcertStatusChangeModel{
     String concertID;
 
     String managerID;
 
-    ApproveConcertModel(String concertID,String managerID){
+    ConcertStatusChangeModel(String concertID,String managerID){
         this.concertID = concertID;
         this.managerID = managerID;
     }

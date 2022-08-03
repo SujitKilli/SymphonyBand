@@ -29,4 +29,10 @@ public class ElaboratedConcertsController {
         List<ElaboratedConcerts> managerConcerts = elaboratedConcertsRepository.findByManageridAndTimeline(manager,timeline);
         return new ResponseEntity<>(managerConcerts, HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ElaboratedConcerts>> getAllElbConcerts () {
+        List<ElaboratedConcerts> elbConcerts = elaboratedConcertsRepository.findAll();
+        return new ResponseEntity<>(elbConcerts, HttpStatus.OK);
+    }
 }
