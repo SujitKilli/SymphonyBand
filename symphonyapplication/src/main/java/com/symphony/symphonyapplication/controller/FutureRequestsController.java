@@ -1,9 +1,7 @@
 package com.symphony.symphonyapplication.controller;
 
 import com.symphony.symphonyapplication.data.models.FutureConcerts;
-import com.symphony.symphonyapplication.data.models.GuestConcerts;
 import com.symphony.symphonyapplication.data.repository.FutureConcertsRepository;
-import com.symphony.symphonyapplication.data.repository.GuestConcertsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/elaboratedconcerts")
-public class FutureRequestsContoller {
+public class FutureRequestsController {
     @Autowired
     FutureConcertsRepository futureConcertsRepository;
 
