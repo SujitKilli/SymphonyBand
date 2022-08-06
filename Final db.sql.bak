@@ -1,0 +1,465 @@
+CREATE DATABASE SYMPHONY;
+USE SYMPHONY;
+CREATE TABLE User_role (
+    Role_id int AUTO_INCREMENT,
+    Role_Name varchar(15) Not Null,
+    Constraint PK_Role PRIMARY KEY (Role_id)
+);
+
+CREATE TABLE Users (
+   User_id char(36),
+   Fname varchar(25) NOT NULL,
+   Lname varchar(25) NOT NULL,
+   Pwd varchar(25) NOT NULL,
+   Ph_No char(10) NOT NULL,
+   Role_id int NOT NULL,
+   Security_Question varchar(70) NOT NULL,
+   Security_ans varchar(50) NOT NULL,
+   Constraint PK_User PRIMARY KEY (User_id),
+   Constraint FK_User_Role FOREIGN KEY Users(Role_id) References User_role(Role_id)
+);
+
+CREATE TABLE User_login (
+   User_id char(36) NOT NULL,
+   Login_id int AUTO_INCREMENT,
+   Login_time timestamp Not NULL,
+   Logout_time timestamp,
+   Constraint PK_UserLogin PRIMARY KEY (Login_id),
+   Constraint FK_UserLogin FOREIGN KEY User_login(User_id) REFERENCES Users(User_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Location (
+  Loc_id int AUTO_INCREMENT,
+  Location_name varchar(40) NOT NULL,
+  Constraint PK_Loc PRIMARY KEY (Loc_id)
+);
+
+CREATE TABLE SysAdmin (
+   User_id char(36),
+   Constraint PK_Admin PRIMARY KEY (User_id),
+   Constraint FK_Admin FOREIGN KEY SysAdmin(User_id) REFERENCES Users(User_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Manager (
+   User_id char(36),
+   Constraint PK_Manager PRIMARY KEY (User_id),
+   Constraint FK_Manager FOREIGN KEY Manager(User_id) REFERENCES Users(User_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Customer (
+   User_id char(36),
+   Constraint PK_Customer PRIMARY KEY (User_id),
+   Constraint FK_Customer FOREIGN KEY Customer(User_id) REFERENCES Users(User_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Technician (
+   User_id char(36),
+   Manager_id char(36) NOT NULL,
+   Constraint PK_Technician PRIMARY KEY (User_id),
+   Constraint FK_Technician FOREIGN KEY Technician(User_id) REFERENCES Users(User_id) ON DELETE CASCADE ON UPDATE CASCADE,
+   Constraint FK_Tech_Manager FOREIGN KEY Technician(Manager_id) REFERENCES Manager(User_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE Instrument(
+    Instrument_id int AUTO_INCREMENT,
+    Instrument_Name varchar(40) NOT NULL,
+    Constraint PK_Instrument PRIMARY KEY (Instrument_id)
+);
+
+CREATE TABLE Concert_type(
+    Type_id int AUTO_INCREMENT,
+    Concert_type varchar(40) NOT NULL,
+    Constraint PK_ConcertType PRIMARY KEY (Type_id)
+);
+
+CREATE TABLE Musical_work(
+    Music_id int AUTO_INCREMENT,
+    Music_type varchar(40) NOT NULL,
+    Constraint PK_ConcertType PRIMARY KEY (Music_id)
+);
+
+CREATE TABLE Includes_music(
+	Type_id int,
+    Music_id int,
+    Constraint PK_Includes_music PRIMARY KEY (Type_id,Music_id),
+    Constraint FK_Includes_music_type FOREIGN KEY Includes_music(Type_id) REFERENCES Concert_type(Type_id) ON UPDATE CASCADE,
+    Constraint FK_Includes_music_id FOREIGN KEY Includes_music(Music_id) REFERENCES Musical_work(Music_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE Notifications(
+    Notif_id int AUTO_INCREMENT,
+    Initial_timestamp timestamp NOT NULL,
+    Expiry_timestamp timestamp NOT NULL,
+    notif_text varchar(20),
+    Constraint PK_Notifications PRIMARY KEY (Notif_id)
+);
+
+CREATE TABLE Notifies(
+	User_id char(36),
+    Notif_id int,
+    Constraint PK_Notifies PRIMARY KEY (User_id,Notif_id),
+    Constraint FK_Notifies_user FOREIGN KEY Notifies(User_id) REFERENCES Users(User_id) ON UPDATE CASCADE,
+    Constraint FK_Notifies_id FOREIGN KEY Notifies(Notif_id) REFERENCES Notifications(Notif_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE Chat(
+    Chat_id int AUTO_INCREMENT,
+    Constraint PK_Chat PRIMARY KEY (Chat_id)
+);
+
+CREATE TABLE Message(
+	Chat_id int,
+    Time_stamp timestamp NOT NULL,
+    Chat_text varchar(50),
+    Sender_id char(36),
+    Constraint PK_Message PRIMARY KEY (Chat_id,Time_stamp),
+    Constraint FK_Message FOREIGN KEY Message(Chat_id) REFERENCES Chat(Chat_id) ON UPDATE CASCADE,
+    Constraint FK_Message_Sender FOREIGN KEY Message(Sender_id) REFERENCES Users(User_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE Initiate_msg(
+	User_id char(36) NOT NULL,
+	Chat_id int,
+    Constraint PK_Initiate_msg PRIMARY KEY (Chat_id),
+    Constraint FK_Initiate_msg_user FOREIGN KEY Initiate_msg(User_id) REFERENCES Users(User_id) ON UPDATE CASCADE,
+    Constraint FK_Initiate_msg_chat FOREIGN KEY Initiate_msg(Chat_id) REFERENCES Chat(Chat_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE Response_msg(
+	User_id char(36) NOT NULL,
+	Chat_id int,
+    Constraint PK_Response_msg PRIMARY KEY (Chat_id),
+    Constraint FK_Response_msg_user FOREIGN KEY Response_msg(User_id) REFERENCES Users(User_id) ON UPDATE CASCADE,
+    Constraint FK_Response_msg_chat FOREIGN KEY Response_msg(Chat_id) REFERENCES Chat(Chat_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE Concert (
+  Concert_id int AUTO_INCREMENT,
+  Concert_date date NOT NULL,
+  Concert_time time NOT NULL,
+  Concert_status varchar(20) NOT NULL,
+  Loc_id int NOT NULL,
+  Amount int NOT NULL,
+  Manager_id char(36),
+  Cust_id char(36) NOT NULL,
+  Concert_type int NOT NULL,
+  Rating int,
+  Comment varchar(80),
+  Constraint PK_Concert PRIMARY KEY (Concert_id),
+  Constraint FK_Concert_loc FOREIGN KEY Concert(Loc_id) REFERENCES Location(Loc_id) ON UPDATE CASCADE,
+  Constraint FK_Concert_mgr FOREIGN KEY Concert(Manager_id) REFERENCES Manager(User_id) ON UPDATE CASCADE,
+  Constraint FK_Concert_cust FOREIGN KEY Concert(Cust_id) REFERENCES Customer(User_id) ON UPDATE CASCADE,  
+  Constraint FK_Concert_con FOREIGN KEY Concert(Concert_type) REFERENCES Concert_type(Type_id) ON UPDATE CASCADE
+) ;
+
+
+CREATE TABLE Musician(
+	User_id char(36),
+	Instrument_id int NOT NULL,
+	Manager_id char(36) NOT NULL,
+    Constraint PK_Musician PRIMARY KEY (User_id),
+    Constraint FK_Musician_instr FOREIGN KEY Musician(Instrument_id) REFERENCES Instrument(Instrument_id) ON UPDATE CASCADE,
+    Constraint FK_Musician_mgr FOREIGN KEY Musician(Manager_id) REFERENCES Manager(User_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE Musician_plays_in_concert (
+  Musician_id char(36),
+  Concert_id int,
+  Constraint PK_Musician_plays_in_concert PRIMARY KEY (Musician_id,Concert_id),
+  Constraint FK_Musician_plays_in_concert_mus FOREIGN KEY Musician_plays_in_concert(Musician_id) REFERENCES Musician(User_id) ON UPDATE CASCADE,
+  Constraint FK_Musician_plays_in_concert_con FOREIGN KEY Musician_plays_in_concert(Concert_id) REFERENCES Concert(Concert_id) ON UPDATE CASCADE
+) ;
+
+
+CREATE TABLE Technician_invloved_in_concert (
+  Technician_id char(36),
+  Concert_id int,
+  Constraint PK_Technician_invloved_in_concert PRIMARY KEY (Technician_id,Concert_id),
+  Constraint FK_Technician_invloved_in_concert_tech FOREIGN KEY Technician_invloved_in_concert(Technician_id) REFERENCES Technician(User_id) ON UPDATE CASCADE,
+  Constraint FK_Technician_invloved_in_concert_con FOREIGN KEY Technician_invloved_in_concert(Concert_id) REFERENCES Concert(Concert_id) ON UPDATE CASCADE
+) ;
+
+CREATE TABLE Instrument_is_to_be_played (
+  Instrument_id int,
+  Music_id int,
+  Constraint PK_Instrument_is_to_be_played PRIMARY KEY (Instrument_id,Music_id),
+  Constraint FK_Instrument_is_to_be_played_inst FOREIGN KEY Instrument_is_to_be_played(Instrument_id) REFERENCES Instrument(Instrument_id) ON UPDATE CASCADE,
+  Constraint FK_Instrument_is_to_be_played_mus FOREIGN KEY Instrument_is_to_be_played(Music_id) REFERENCES Musical_work(Music_id) ON UPDATE CASCADE
+) ;
+
+insert into User_role VALUES(1 , 'Admin');
+insert into User_role VALUES(2 , 'Manager');
+insert into User_role values (3, 'Technician');
+insert into User_role values (4 , 'Musician');
+insert into User_role values (5 , 'Customer');
+
+insert into location values (001, 'Dallas');
+insert into location values (002 , 'Austin');
+insert into location (Location_name) values ('Houston');
+insert into location (Location_name) values ('San Antonio');
+insert into location (Location_name) values ('College Station');
+
+insert into Instrument (Instrument_Name) values ('Saxophone');
+insert into Instrument (Instrument_Name) values ('Guitar');
+insert into Instrument (Instrument_Name) values ('Mouth Organ');
+insert into Instrument (Instrument_Name) values ('Piano');
+insert into Instrument (Instrument_Name) values ('Drums');
+insert into Instrument (Instrument_Name) values ('Violin');
+insert into Instrument (Instrument_Name) values ('Vocals');
+
+insert into concert_type(Concert_type) values ('Church Concert');
+insert into concert_type(Concert_type) values ('Private Party');
+insert into concert_type(Concert_type) values ('Outdoor Concert');
+
+insert into musical_work(Music_type) values ('Classical');
+insert into musical_work(Music_type) values ('Swedish folk');
+insert into musical_work(Music_type) values ('German folk');
+
+insert into includes_music values(1,1);
+insert into includes_music values(2,3);
+insert into includes_music values(3,2);
+insert into includes_music values(3,1);
+insert into includes_music values(3,3);
+
+insert into instrument_is_to_be_played values(1,1);
+insert into instrument_is_to_be_played values(4,1);
+insert into instrument_is_to_be_played values(7,1);
+insert into instrument_is_to_be_played values(6,1);
+insert into instrument_is_to_be_played values(2,3);
+insert into instrument_is_to_be_played values(5,3);
+insert into instrument_is_to_be_played values(3,3);
+insert into instrument_is_to_be_played values(1,2);
+insert into instrument_is_to_be_played values(4,2);
+insert into instrument_is_to_be_played values(7,2);
+insert into instrument_is_to_be_played values(7,3);
+insert into instrument_is_to_be_played values(5,2);
+
+insert into notifications(Initial_timestamp, Expiry_timestamp,notif_text) values (current_timestamp(),current_timestamp()+interval 10 minute,"test notif");
+insert into notifications(Initial_timestamp, Expiry_timestamp,notif_text) values (current_timestamp(),current_timestamp()+interval 12 minute,"test notif");
+insert into notifications(Initial_timestamp, Expiry_timestamp,notif_text) values (current_timestamp(),current_timestamp()+interval 13 minute,"test notif");
+
+insert into users values (uuid(),'John','T','abc@123',9595959595,1,'What do you like?','test');
+insert into users values (uuid(),'John','C','abc@124',9595959593,2,'What do you like?','test');
+insert into users values (uuid(),'John','E','abc@125',9595959594,3,'What do you like?','test');
+insert into users values (uuid(),'John','N','abc@126',9595959596,2,'What do you like?','test');
+insert into users values (uuid(),'John','A','abc@127',9595959597,3,'What do you like?','test');
+insert into users values (uuid(),'John','M','abc@128',9595959598,5,'What do you like?','test');
+insert into users values (uuid(),'John','F','abc@129',9595959599,5,'What do you like?','test');
+insert into users values (uuid(),'Cena','J','abc@133',9595959591,4,'What do you like?','test');
+insert into users values (uuid(),'Cena','O','abc@132',9595959592,4,'What do you like?','test');
+insert into users values (uuid(),'Cena','H','abc@131',9595959522,4,'What do you like?','test');
+insert into users values (uuid(),'Cena','N','abc@120',9595959511,4,'What do you like?','test');
+insert into users values (uuid(),'Cena','T','abc@122',9595959533,4,'What do you like?','test');
+insert into users values (uuid(),'Cena','D','abc@121',9595959544,4,'What do you like?','test');
+
+insert into chat values ();
+insert into chat values ();
+insert into chat values ();
+
+
+insert into user_login values ('ee8f02ae-1208-11ed-afe9-040e3c8e5390',1,current_timestamp(),current_timestamp());
+insert into user_login values ('ee8f7e54-1208-11ed-afe9-040e3c8e5390',2,current_timestamp(),current_timestamp());
+insert into user_login values ('ee8f7e54-1208-11ed-afe9-040e3c8e5390',3,current_timestamp(),current_timestamp());
+
+insert into sysadmin
+select User_id from Users
+where Role_id=1;
+
+insert into Manager
+select User_id from Users
+where Role_id=2;
+
+insert into Technician(User_id,Manager_id)
+select User_id,'ee8f7e54-1208-11ed-afe9-040e3c8e5390' from Users
+where Role_id=3;
+
+insert into Customer
+select User_id from Users
+where Role_id=5;
+
+insert into musician(User_id,Instrument_id,Manager_id)
+values ('ee92e8a8-1208-11ed-afe9-040e3c8e5390',1,'ee8f7e54-1208-11ed-afe9-040e3c8e5390');
+insert into musician(User_id,Instrument_id,Manager_id)
+values ('ee93a862-1208-11ed-afe9-040e3c8e5390',2,'ee8f7e54-1208-11ed-afe9-040e3c8e5390');
+insert into musician(User_id,Instrument_id,Manager_id)
+values ('ee94428d-1208-11ed-afe9-040e3c8e5390',3,'ee8f7e54-1208-11ed-afe9-040e3c8e5390');
+insert into musician(User_id,Instrument_id,Manager_id)
+values ('ee94b472-1208-11ed-afe9-040e3c8e5390',4,'ee8f7e54-1208-11ed-afe9-040e3c8e5390');
+insert into musician(User_id,Instrument_id,Manager_id)
+values ('ee952ec6-1208-11ed-afe9-040e3c8e5390',5,'ee8f7e54-1208-11ed-afe9-040e3c8e5390');
+
+insert into Message 
+values(1,current_timestamp(),'test','ee8f7e54-1208-11ed-afe9-040e3c8e5390');
+insert into Message 
+values(2,current_timestamp(),'test','ee92e8a8-1208-11ed-afe9-040e3c8e5390');
+
+insert into  initiate_msg
+VALUES('ee8f7e54-1208-11ed-afe9-040e3c8e5390',1);
+
+insert into response_msg VALUES('ee92e8a8-1208-11ed-afe9-040e3c8e5390',2);
+
+insert into notifies values ('ee8f7e54-1208-11ed-afe9-040e3c8e5390',1) ;
+
+
+
+insert into concert values (1,current_date(),current_time(),"Requested",1,1000,'ee8f7e54-1208-11ed-afe9-040e3c8e5390','ee91be32-1208-11ed-afe9-040e3c8e5390',1,null,null);
+insert into concert values (2,current_date(),current_time(),"InProgress",2,2000,'ee8f7e54-1208-11ed-afe9-040e3c8e5390','ee91be32-1208-11ed-afe9-040e3c8e5390',2,null,null);
+insert into concert values (3,current_date(),current_time(),"Completed",3,3000,'ee8f7e54-1208-11ed-afe9-040e3c8e5390','ee91be32-1208-11ed-afe9-040e3c8e5390',3,5,"Awesome");
+
+insert into technician_invloved_in_concert values ('ee8fe8c1-1208-11ed-afe9-040e3c8e5390',1);
+insert into technician_invloved_in_concert values ('ee8fe8c1-1208-11ed-afe9-040e3c8e5390',2);
+insert into technician_invloved_in_concert values ('ee8fe8c1-1208-11ed-afe9-040e3c8e5390',3);
+
+Select * from instrument_is_to_be_played;
+Select * from includes_music;
+Select * from musician;
+Select * from users where role_id=4;
+
+
+insert into musician_plays_in_concert values ('ee92e8a8-1208-11ed-afe9-040e3c8e5390',1);
+insert into musician_plays_in_concert values ('ee93a862-1208-11ed-afe9-040e3c8e5390',1);
+
+insert into musician_plays_in_concert values ('ee93a862-1208-11ed-afe9-040e3c8e5390',2);
+insert into musician_plays_in_concert values ('ee94428d-1208-11ed-afe9-040e3c8e5390',2);
+
+insert into musician_plays_in_concert values ('ee92e8a8-1208-11ed-afe9-040e3c8e5390',3);
+insert into musician_plays_in_concert values ('ee94428d-1208-11ed-afe9-040e3c8e5390',3);
+
+alter table concert
+add index (Concert_status);
+
+alter table location
+add index (Location_name);
+
+alter table concert
+add index (Rating);
+
+alter table concert
+add index (Amount);
+
+Create view Concert_sts_loc as
+select B.Concert_type,A.Concert_status, A.Concert_date, A.Concert_time, C.Location_name 
+from concert A, concert_type B, location C
+WHERE A.Concert_type=B.Type_id AND A.Loc_id=C.Loc_id;
+select * from concert_sts_loc;
+select * from concert;
+select * from concert_type;
+select * from location;
+
+update concert
+set Concert_type=2
+where Loc_id=2;
+
+update concert
+set Concert_type=3
+where Loc_id=3;
+Create view MusicianInConcert as 
+select ct.Concert_id,ctt.Concert_type,u.Fname,u.Lname,i.Instrument_Name from musician_plays_in_concert mpc, concert_type ctt, concert ct, users u, musician m , instrument i
+where mpc.Concert_id = ct.Concert_id and ct.Concert_type  = ctt.Type_id and mpc.Musician_id = u.User_id and m.user_id = mpc.Musician_id  and  m.instrument_id = i.instrument_id;
+
+ Select * from MusicianInConcert;
+ 
+
+ alter table users 
+ add constraint ph_un UNIQUE(Ph_No),
+ add index Ph_No_idx(Ph_No);
+ 
+Create View UserRoleMapping as
+Select u.*,ur.Role_Name from Users u,User_Role ur where u.role_id = ur.role_id;
+
+Select * from concert;
+Select * from users;
+
+insert into concert values (4,current_date(),current_time(),"InProgress",2,3000,'ee8f7e54-1208-11ed-afe9-040e3c8e5390','ee91be32-1208-11ed-afe9-040e3c8e5390',2,null,null);
+insert into concert values (5,current_date(),current_time(),"InProgress",1,4000,'ee8f7e54-1208-11ed-afe9-040e3c8e5390','ee91be32-1208-11ed-afe9-040e3c8e5390',1,null,null);
+insert into concert values (6,current_date(),current_time(),"InProgress",3,6000,'ee8f7e54-1208-11ed-afe9-040e3c8e5390','ee91be32-1208-11ed-afe9-040e3c8e5390',3,null,null);
+
+Insert into musician_plays_in_concert values ('ee92e8a8-1208-11ed-afe9-040e3c8e5390',4);
+Insert into technician_invloved_in_concert values ('ee8fe8c1-1208-11ed-afe9-040e3c8e5390',4);
+
+Create View FutureConcertsForGuests as
+Select c.*,l.Location_name,ct.Concert_type as Actual_Type from Concert c,Location l,concert_type ct 
+where c.Loc_id = l.Loc_id and ct.Type_id = c.Concert_type and c.concert_date >= current_date() and c.Concert_status = 'InProgress';
+
+Create View InvolvedConcerts as 
+Select c.*,l.Location_name,ct.Concert_type as Actual_Type,mpc.musician_id as user_id,"Musician" as role_name,Case when c.concert_date >= current_date() then 'Future' else 'Past' end as Timeline from Concert c,Location l,concert_type ct,musician_plays_in_concert mpc
+where c.Loc_id = l.Loc_id and ct.Type_id = c.Concert_type and mpc.Concert_id = c.Concert_id
+union
+Select c.*,l.Location_name,ct.Concert_type as Actual_Type,tic.technician_id as user_id,"Technician" as role_name,Case when c.concert_date >= current_date() then 'Future' else 'Past' end as Timeline from Concert c,Location l,concert_type ct,technician_invloved_in_concert tic
+where c.Loc_id = l.Loc_id and ct.Type_id = c.Concert_type and tic.Concert_id = c.Concert_id;
+
+Create View ElaboratedConcerts as 
+Select c.*,l.Location_name,ct.Concert_type as Actual_Type,Case when c.concert_date >= current_date() then 'Future' else 'Past' end as Timeline from Concert c,Location l,concert_type ct
+where c.Loc_id = l.Loc_id and ct.Type_id = c.Concert_type;
+
+Create view Concertmusicmapping as
+select B.*,C.*
+from includes_music A, concert_type B, musical_work C
+WHERE A.Type_id=B.Type_id AND A.Music_id=C.Music_id;
+
+Create view MngEmpMapping as
+select D.User_id as Manager_id,concat(D.Fname,' ', D.Lname) as Manager,A.User_id AS Emp_id,concat(A.Fname,' ', A.Lname) as Employee,A.Role_id,C.Role_name
+from users A, musician B, user_role C, users D
+WHERE A.User_id=B.User_id AND D.User_id=B.Manager_id AND A.Role_id=C.Role_id
+UNION
+select D.User_id as Manager_id,concat(D.Fname,' ', D.Lname) as Manager,A.User_id AS Emp_id,concat(A.Fname,' ', A.Lname) as Employee,A.Role_id,C.Role_name
+from users A, technician B, user_role C, users D
+WHERE A.User_id=B.User_id AND D.User_id=B.Manager_id AND A.Role_id=C.Role_id;
+
+
+drop trigger amt_check;
+
+DELIMITER  //
+CREATE TRIGGER amt_check BEFORE INSERT ON concert
+       FOR EACH ROW
+       BEGIN
+           IF NEW.Amount < 0 THEN
+               SET NEW.Amount = 0;
+           END IF;
+       END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER `Cust_add` AFTER INSERT ON `users`
+FOR EACH ROW
+BEGIN
+INSERT INTO customer    
+    SELECT User_id
+    FROM users WHERE Role_id = '5' and User_id=new.user_id ;    
+END
+//
+DELIMITER ;
+
+Select * from user_login;
+Select * from users;
+Select * from customer;
+Select * from concert;
+
+DELIMITER //
+CREATE TRIGGER Sts_Change
+AFTER UPDATE
+ON concert FOR EACH ROW
+BEGIN
+    IF OLD.Concert_status='Requested' and  new.Concert_status='InProgress' THEN
+        INSERT INTO technician_invloved_in_concert(Technician_id,Concert_id)
+        select User_id,new.Concert_id from technician
+        where Manager_id=new.Manager_id;
+
+         INSERT INTO musician_plays_in_concert(Musician_id,Concert_id)
+        select User_id,new.Concert_id from musician
+        where Manager_id=new.Manager_id;
+    END IF;
+END//
+DELIMITER ;
+
+
+insert into concert values (7,CURRENT_DATE()+10,current_time(),"Requested",1,1000,'ee8f7e54-1208-11ed-afe9-040e3c8e5390','ee91be32-1208-11ed-afe9-040e3c8e5390',1,null,null);
+
+update concert
+set Concert_status='InProgress'
+where Concert_id=7;
+
+Create View concertapprovalmanager as
+Select c.*,l.Location_name,ct.Concert_type as Actual_Type from Concert c,Location l,concert_type ct
+where c.Loc_id = l.Loc_id and ct.Type_id = c.Concert_type and c.concert_date >= current_date() and c.Concert_status = 'Requested';
